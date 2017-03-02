@@ -95,6 +95,7 @@
     //如果没有对图片进行缓存，每次都会去网络加载图片
     [self.queue addOperation:downloader];
     
+    
     return cell;
 }
 
@@ -116,7 +117,17 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    [_cacheImgList removeAllObjects];
+    
+    [_operationList removeAllObjects];
+
+    
+    NSFileManager* manager = [NSFileManager defaultManager];
+    for (HMModel* model in _modelList) {
+        [manager removeItemAtPath:[model.icon hm_ImagePath] error:nil];
+    }
+    
 }
 
 
